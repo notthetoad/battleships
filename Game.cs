@@ -23,17 +23,49 @@ namespace Battleships
             }
         }
 
-        public int getRandomNumber()
+        public int[] GetRandomCoordinates()
         {
             Random rnd = new Random();
-            int num = rnd.Next(11);
-            return num;
+            int[] coords = new int[2];
+            coords[0] = rnd.Next(11);
+            coords[1] = rnd.Next(11);
+            return coords;
         }
 
-        public void InsertRandomShip()
+        public void InsertRandomSquare()
         {
-            int num = getRandomNumber();
-            Board[num, num] = 1;
+            int[] pos = GetRandomCoordinates();
+            Board[pos[0], pos[1]] = 1;
+        }
+
+        // 1. Get random position
+        // 2. Check to see if ship of size 5 fits
+        // 3. if position - size of ship is greater or equal to 0 ship can be inserted
+        // if it is not greater or equal to 0 we can:
+        //  - search for new random number that checks these conditions
+        //  - start inserting squares at the back of the ship
+        //  I think this logic is going in the right direction, just need to work out how to make logical statement that will meet conditions I have
+        public void InsertShipHorizontal()
+        {
+            int[] pos = GetRandomCoordinates();
+            for (int i = 0, j = 5; i < j; i++, j--)
+            {
+                Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
+                if (pos[1]+i - j >= 0)
+                {
+                    Board[pos[0], pos[1]+i] = 1; 
+                }
+            }
+        }
+
+        public void InsertShipVertical()
+        {
+            
+        }
+
+        public void PopulateBoard()
+        {
+            
         }
     }
 }

@@ -8,8 +8,8 @@ class Program
         Game game = new Game();
         game.printBoard(); 
         Console.WriteLine("\n");
-        //game.Board[2, 6] = 1;
-        game.InsertRandomShip();
+        //game.InsertRandomSquare();
+        game.InsertShipHorizontal();
         game.printBoard(); 
     }
 }
