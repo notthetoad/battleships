@@ -59,20 +59,16 @@ namespace Battleships
             }
         }
 
-        public void InsertShipHorizontal2()
-        {
-            int[] pos = GetRandomCoordinates();
-            int i = 0;
-            while (pos[1]+5 <= 10 && i < 5)
-            {
-                Board[pos[0], pos[1]+i] = 1;
-                i++;
-            }
-        }
-
+        // Same exception as in InsertShipHorizontal(). Will need to add checking for other ship because they cannot cross. Need to add inserting at the back if there is not enough space.
         public void InsertShipVertical()
         {
-            
+            int[] pos = GetRandomCoordinates();
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
+                if (pos[0]+5 <= 10)
+                    Board[pos[0]+i, pos[1]] = 1;
+            }
         }
 
         public void PopulateBoard()

@@ -10,7 +10,8 @@ class Program
         Console.WriteLine("\n");
         //game.InsertRandomSquare();
         //game.InsertShipHorizontal();
-        game.InsertShipHorizontal2();
+        //game.InsertShipHorizontal2();
+        game.InsertShipVertical();
         game.printBoard(); 
     }
 }
