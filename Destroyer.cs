@@ -2,6 +2,11 @@ namespace Battleships
 {
     class Destroyer
     {
-        public int squares = 4;
+        private int size = 4;
+
+        public int GetSize()
+        {
+            return size;
+        }
     }
 }

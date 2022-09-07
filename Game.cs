@@ -46,16 +46,18 @@ namespace Battleships
         //  - start inserting squares at the back of the ship
         //  I think this logic is going in the right direction, just need to work out how to make logical statement that will meet conditions I have
         //  This works, but is weird exception if 1st dimension idx is 10 and 2nd dimension idx is 0: IndexOutOfRangeException
+        //  If Board[10, 10] gets randomed for position Exception IndexOutOfRangeException
         public void InsertShipHorizontal()
         {
+            Destroyer destroyer = new Destroyer();
             int[] pos = GetRandomCoordinates();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < destroyer.GetSize(); i++)
             {
                 Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
-                if (pos[1]+5 <= 10)
-                {
+                if (pos[1]+destroyer.GetSize() <= Board.GetLength(1))
                     Board[pos[0], pos[1]+i] = 1; 
-                }
+                else
+                    Board[pos[0], pos[1]-i] = 1;
             }
         }
 
@@ -66,8 +68,10 @@ namespace Battleships
             for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
-                if (pos[0]+5 <= 10)
+                if (pos[0]+5 <= Board.GetLength(0))
                     Board[pos[0]+i, pos[1]] = 1;
+                else
+                    Board[pos[0]-i, pos[1]] = 1;
             }
         }
 

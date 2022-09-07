@@ -9,9 +9,8 @@ class Program
         game.printBoard(); 
         Console.WriteLine("\n");
         //game.InsertRandomSquare();
-        //game.InsertShipHorizontal();
-        //game.InsertShipHorizontal2();
-        game.InsertShipVertical();
+        game.InsertShipHorizontal();
+        //game.InsertShipVertical();
         game.printBoard(); 
     }
 }
