@@ -2,17 +2,16 @@ namespace Battleships
 {
     class Ship
     {
-        public int size;
-        public int[2] position;
-        public int direction;
-        public int[size] hit;
-        public bool sunk;
+        public int size = 5;
+        //public int[2] position;
+        public int direction = 0;
+        //public int[size] hit;
+        //public bool sunk;
 
-        Ship(int size, int[2] position, int direction)
+        public Ship(int rand)
         {
-            this.size = size;
-            this.position = position;
-            this.direction = direction;
+            //this.position = position;
+            this.direction = rand;
         }
     }
 }
