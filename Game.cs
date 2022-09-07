@@ -38,15 +38,32 @@ namespace Battleships
             Board[pos[0], pos[1]] = 1;
         }
 
-        // 1. Get random position
-        // 2. Check to see if ship of size 5 fits
-        // 3. if position - size of ship is greater or equal to 0 ship can be inserted
-        // if it is not greater or equal to 0 we can:
-        //  - search for new random number that checks these conditions
-        //  - start inserting squares at the back of the ship
-        //  I think this logic is going in the right direction, just need to work out how to make logical statement that will meet conditions I have
-        //  This works, but is weird exception if 1st dimension idx is 10 and 2nd dimension idx is 0: IndexOutOfRangeException
-        //  If Board[10, 10] gets randomed for position Exception IndexOutOfRangeException
+        public bool DoesCollide(int x, int y)
+        {
+            if (Board[x, y] == 1)
+                return true;
+            return false;
+        }
+
+        // add direction to ship class to see if it's horizontal or vertical
+        public bool DoesShipFit(int x, int y, Destroyer ship)
+        {
+            if (ship.Direction == 0)
+            {
+                if (Board[x, y+ship.Size] < Board.GetLength(ship.Direction)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                if (Board[x+ship.Size, y] < Board.GetLength(ship.Direction)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public void InsertShipHorizontal()
         {
             Destroyer destroyer = new Destroyer();
@@ -76,28 +93,29 @@ namespace Battleships
             }
         }
 
+        // Make the board of enums that has data like empty, ship, wasBombed
         // Want to make it so random ship will get random number 0-1 to decide if it is placed vertically or horizontally
-        public void PopulateBoard(object[] ships)
-        {
-            Random rnd = new Random();
-            int num = rnd.Next(2);
-            int ship;
-            for (int i = 0; i < ships.GetLength(); i++)
-            {
-                ship = rnd.Next(3); 
-            
-                switch(num)
-                {
-                    case 1:
-                        InsertShipVertical(ships[ship]) 
-                        break;
-                    case 2:
-                        InsertShipHorizontal(ships[ship])
-                        break;
-                    default:
-                        return;
-                }
-            }
-        }
+        //public void PopulateBoard(object[] ships)
+        //{
+        //    Random rnd = new Random();
+        //    int num = rnd.Next(2);
+        //    int ship;
+        //    for (int i = 0; i < ships.GetLength(); i++)
+        //    {
+        //        ship = rnd.Next(3); 
+        //    
+        //        switch(num)
+        //        {
+        //            case 1:
+        //                InsertShipVertical(ships[ship]);
+        //                break;
+        //            case 2:
+        //                InsertShipHorizontal(ships[ship]);
+        //                break;
+        //            default:
+        //                return;
+        //        }
+        //    }
+        //}
     }
 }
