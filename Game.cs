@@ -27,8 +27,8 @@ namespace Battleships
         {
             Random rnd = new Random();
             int[] coords = new int[2];
-            coords[0] = rnd.Next(11);
-            coords[1] = rnd.Next(11);
+            coords[0] = rnd.Next(10);
+            coords[1] = rnd.Next(10);
             return coords;
         }
 
