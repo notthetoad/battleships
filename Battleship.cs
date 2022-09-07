@@ -2,6 +2,11 @@ namespace Battleships
 {
     class Battleship
     {
-        public int squares = 5;
+        private int size = 5;
+
+        public int GetSize()
+        {
+            return size;
+        }
     }
 }

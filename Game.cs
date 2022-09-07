@@ -54,8 +54,8 @@ namespace Battleships
             for (int i = 0; i < destroyer.GetSize(); i++)
             {
                 Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
-                if (pos[1]+destroyer.GetSize() <= Board.GetLength(1))
-                    Board[pos[0], pos[1]+i] = 1; 
+                if (pos[1]+destroyer.GetSize() < Board.GetLength(1))
+                    Board[pos[0], pos[1]+i] = 1;
                 else
                     Board[pos[0], pos[1]-i] = 1;
             }
@@ -64,11 +64,12 @@ namespace Battleships
         // Same exception as in InsertShipHorizontal(). Will need to add checking for other ship because they cannot cross. Need to add inserting at the back if there is not enough space.
         public void InsertShipVertical()
         {
+            Battleship battleship = new Battleship();
             int[] pos = GetRandomCoordinates();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < battleship.GetSize(); i++)
             {
                 Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
-                if (pos[0]+5 <= Board.GetLength(0))
+                if (pos[0]+battleship.GetSize() < Board.GetLength(0))
                     Board[pos[0]+i, pos[1]] = 1;
                 else
                     Board[pos[0]-i, pos[1]] = 1;
