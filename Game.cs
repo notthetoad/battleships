@@ -76,9 +76,28 @@ namespace Battleships
             }
         }
 
-        public void PopulateBoard()
+        // Want to make it so random ship will get random number 0-1 to decide if it is placed vertically or horizontally
+        public void PopulateBoard(object[] ships)
         {
+            Random rnd = new Random();
+            int num = rnd.Next(2);
+            int ship;
+            for (int i = 0; i < ships.GetLength(); i++)
+            {
+                ship = rnd.Next(3); 
             
+                switch(num)
+                {
+                    case 1:
+                        InsertShipVertical(ships[ship]) 
+                        break;
+                    case 2:
+                        InsertShipHorizontal(ships[ship])
+                        break;
+                    default:
+                        return;
+                }
+            }
         }
     }
 }
