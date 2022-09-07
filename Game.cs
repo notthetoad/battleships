@@ -45,16 +45,28 @@ namespace Battleships
         //  - search for new random number that checks these conditions
         //  - start inserting squares at the back of the ship
         //  I think this logic is going in the right direction, just need to work out how to make logical statement that will meet conditions I have
+        //  This works, but is weird exception if 1st dimension idx is 10 and 2nd dimension idx is 0: IndexOutOfRangeException
         public void InsertShipHorizontal()
         {
             int[] pos = GetRandomCoordinates();
-            for (int i = 0, j = 5; i < j; i++, j--)
+            for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
-                if (pos[1]+i - j >= 0)
+                if (pos[1]+5 <= 10)
                 {
                     Board[pos[0], pos[1]+i] = 1; 
                 }
+            }
+        }
+
+        public void InsertShipHorizontal2()
+        {
+            int[] pos = GetRandomCoordinates();
+            int i = 0;
+            while (pos[1]+5 <= 10 && i < 5)
+            {
+                Board[pos[0], pos[1]+i] = 1;
+                i++;
             }
         }
 
