@@ -62,10 +62,6 @@ namespace Battleships
 
         public bool PlaceShip(Ship ship)
         {
-            //if (ship.direction == 0)
-            //    InsertShipVertical(ship);
-            //else
-            //    InsertShipHorizontal(ship);
             return (ship.direction == 0) ? InsertShipVertical(ship) : InsertShipHorizontal(ship);
         }
 
@@ -93,15 +89,15 @@ namespace Battleships
         }
 
         // Metoda, która wstawia wszystkie statki po kolei. Dopóki wszystkie statki nie zostaną umieszcone (pętla), twórz statki i próbuj je umieścić, jeżeli dany statek nie może być umieszczony na planszy, wylosuj nowy i próbuj do skutku. 
-        
-       //public bool PlaceAllShips() 
-       //{
-       //     for (int i = 0; i < 3; i++)
-       //     {
-       //         Ship ship = new Ship();
-
-       //     }
-       //}
+       // Sometimes works 
+       public void PlaceAllShips() 
+       {
+            for (int i = 0; i < 3; i++)
+            {
+                Ship ship = new Ship();
+                while (!PlaceShip(new Ship())){};
+            }
+       }
     }
 }
 

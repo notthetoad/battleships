@@ -13,8 +13,7 @@ class Program
         Console.WriteLine("Direction: {0}", ship.direction);
         Console.WriteLine("Does fit? {0}", fit);
         Console.WriteLine("X: {0}\tY: {1}", ship.x, ship.y);
-        game.PlaceShip(ship);
-        game.PlaceShip(ship);
+        game.PlaceAllShips();
         game.printBoard();
     }
 }
