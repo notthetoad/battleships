@@ -22,9 +22,7 @@ namespace Battleships
         // need to also check if in array
         public bool IsSquareEmpty(int x, int y)
         {
-            if (Board[x, y] == 1)
-                return false;
-            return true;
+            return Board[x, y] == 0;
         }
 
         public bool DoesShipFit(Ship ship)
@@ -39,46 +37,45 @@ namespace Battleships
             }
         }
 
-        public void InsertShipVertical(Ship ship)
+        public bool CanShipBePlaced(Ship ship)
         {
-            if (DoesShipFit(ship))
+            if (!DoesShipFit(ship))
+                return false;
+
+            for (int i = 0; i < ship.size; i++)
             {
-                for (int i = 0; i < ship.size; i++)
-                {
-                    if (IsSquareEmpty(ship.x+i, ship.y))
-                        Board[ship.x+i, ship.y] = 1;
-                }
+                if (!IsSquareEmpty(ship.x, ship.y+i))
+                    return false;
             }
+            return true;
         }
 
-        public void InsertShipHorizontal(Ship ship)
+        public bool InsertShipHorizontal(Ship ship)
         {
-            if (DoesShipFit(ship))
+            if (!CanShipBePlaced(ship))
+                return false;
+
+            for (int i = 0; i < ship.size; i++)
             {
-                for (int i = 0; i < ship.size; i++)
-                {
-                    if (IsSquareEmpty(ship.x, ship.y+i))
-                        Board[ship.x, ship.y+i] = 1;
-                }
+                Board[ship.x, ship.y+i] = 1;
             }
+            return true;
         }
 
-        public void InsertShip(Ship ship)
+        public bool InsertShipVertical(Ship ship)
         {
-            if (DoesShipFit(ship))
-            {
-                for (int i = 0; i < ship.size; i++)
-                {
-                    if (ship.direction == 0)
-                    {
-                        if (IsSquareEmpty(ship.x+i, ship.y))
-                        {
-                            Board[ship.x+i, ship.y] = 1;
-                        }
-                    }
+            if (!CanShipBePlaced(ship))
+                return false;
 
-                }
+            for (int i = 0; i < ship.size; i++)
+            {
+                Board[ship.x+i, ship.y] = 1;
             }
+            return true;
         }
+
+        // Metoda, która wstawia wszystkie statki po kolei. Dopóki wszystkie statki nie zostaną umieszcone (pętla), twórz statki i próbuj je umieścić, jeżeli dany statek nie może być umieszczony na planszy, wylosuj nowy i próbuj do skutku. 
+        
+        
     }
 }
