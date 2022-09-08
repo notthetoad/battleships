@@ -18,15 +18,8 @@ namespace Battleships
             }
         }
 
-        public int[] GetRandomCoordinates()
-        {
-            Random rnd = new Random();
-            int[] coords = new int[2];
-            coords[0] = rnd.Next(10);
-            coords[1] = rnd.Next(10);
-            return coords;
-        }
-
+        // Exception index range out of bounds when checking in inserting ship because x+i, y+i
+        // need to also check if in array
         public bool IsSquareEmpty(int x, int y)
         {
             if (Board[x, y] == 1)
@@ -34,15 +27,57 @@ namespace Battleships
             return true;
         }
 
-        public bool DoesShipFit(int x, int y, Ship ship)
+        public bool DoesShipFit(Ship ship)
         {
-            if (ship.direction == 1)
+            if (ship.direction == 0)
             {
-                return (y+ship.size < Board.GetLength(ship.direction));
+                return (ship.x + ship.size < Board.GetLength(ship.direction));
             }
             else
             {
-                return (x + ship.size < Board.GetLength(ship.direction));
+                return (ship.y + ship.size < Board.GetLength(ship.direction));
+            }
+        }
+
+        public void InsertShipVertical(Ship ship)
+        {
+            if (DoesShipFit(ship))
+            {
+                for (int i = 0; i < ship.size; i++)
+                {
+                    if (IsSquareEmpty(ship.x+i, ship.y))
+                        Board[ship.x+i, ship.y] = 1;
+                }
+            }
+        }
+
+        public void InsertShipHorizontal(Ship ship)
+        {
+            if (DoesShipFit(ship))
+            {
+                for (int i = 0; i < ship.size; i++)
+                {
+                    if (IsSquareEmpty(ship.x, ship.y+i))
+                        Board[ship.x, ship.y+i] = 1;
+                }
+            }
+        }
+
+        public void InsertShip(Ship ship)
+        {
+            if (DoesShipFit(ship))
+            {
+                for (int i = 0; i < ship.size; i++)
+                {
+                    if (ship.direction == 0)
+                    {
+                        if (IsSquareEmpty(ship.x+i, ship.y))
+                        {
+                            Board[ship.x+i, ship.y] = 1;
+                        }
+                    }
+
+                }
             }
         }
     }

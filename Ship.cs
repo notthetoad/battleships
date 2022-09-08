@@ -3,15 +3,17 @@ namespace Battleships
     class Ship
     {
         public int size = 5;
-        //public int[2] position;
-        public int direction = 0;
+        public int direction;
+        public int x;
+        public int y;
         //public int[size] hit;
         //public bool sunk;
 
-        public Ship(int rand)
+        public Ship(int rand, int x, int y)
         {
-            //this.position = position;
             this.direction = rand;
+            this.x = x;
+            this.y = y;
         }
     }
 }
