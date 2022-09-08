@@ -1,7 +1,10 @@
+using System;
+
 namespace Battleships
 {
     class Ship
     {
+        private readonly Random random = new Random();
         public int size = 5;
         public int direction;
         public int x;
@@ -9,11 +12,16 @@ namespace Battleships
         //public int[size] hit;
         //public bool sunk;
 
-        public Ship(int rand, int x, int y)
+        public Ship()
         {
-            this.direction = rand;
-            this.x = x;
-            this.y = y;
+            this.direction = GetRandomNumber(2);
+            this.x = GetRandomNumber(10);
+            this.y = GetRandomNumber(10);
+        }
+
+        private int GetRandomNumber(int n)
+        {
+            return this.random.Next(n);
         }
     }
 }

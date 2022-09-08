@@ -22,7 +22,7 @@ namespace Battleships
         // need to also check if in array
         public bool IsSquareEmpty(int x, int y)
         {
-            return Board[x, y] == 0;
+            return Board[x, y] == 0 && x < Board.GetLength(0) && y < Board.GetLength(1);
         }
 
         public bool DoesShipFit(Ship ship)
@@ -76,6 +76,20 @@ namespace Battleships
 
         // Metoda, która wstawia wszystkie statki po kolei. Dopóki wszystkie statki nie zostaną umieszcone (pętla), twórz statki i próbuj je umieścić, jeżeli dany statek nie może być umieszczony na planszy, wylosuj nowy i próbuj do skutku. 
         
-        
+       //public bool PlaceAllShips() 
+       //{
+       //     for (int i = 0; i < 3; i++)
+       //     {
+       //         
+       //     }
+       //}
     }
 }
+
+
+
+
+
+
+
+
