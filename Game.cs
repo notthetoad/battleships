@@ -18,8 +18,6 @@ namespace Battleships
             }
         }
 
-        // Exception index range out of bounds when checking in inserting ship because x+i, y+i
-        // need to also check if in array
         public bool IsSquareEmpty(int x, int y)
         {
             return Board[x, y] == 0 && x < Board.GetLength(0) && y < Board.GetLength(1);
@@ -42,12 +40,33 @@ namespace Battleships
             if (!DoesShipFit(ship))
                 return false;
 
-            for (int i = 0; i < ship.size; i++)
+            if (ship.direction == 0)
             {
-                if (!IsSquareEmpty(ship.x, ship.y+i))
-                    return false;
+                for (int i = 0; i < ship.size; i++)
+                {
+                    if (!IsSquareEmpty(ship.x+i, ship.y))
+                        return false;
+                }
+                return true;
             }
-            return true;
+            else
+            {
+                for (int i = 0; i < ship.size; i++)
+                {
+                    if (!IsSquareEmpty(ship.x, ship.y+i))
+                        return false;
+                }
+                return true;
+            }
+        }
+
+        public bool PlaceShip(Ship ship)
+        {
+            //if (ship.direction == 0)
+            //    InsertShipVertical(ship);
+            //else
+            //    InsertShipHorizontal(ship);
+            return (ship.direction == 0) ? InsertShipVertical(ship) : InsertShipHorizontal(ship);
         }
 
         public bool InsertShipHorizontal(Ship ship)
@@ -70,8 +89,7 @@ namespace Battleships
             for (int i = 0; i < ship.size; i++)
             {
                 Board[ship.x+i, ship.y] = 1;
-            }
-            return true;
+            } return true;
         }
 
         // Metoda, która wstawia wszystkie statki po kolei. Dopóki wszystkie statki nie zostaną umieszcone (pętla), twórz statki i próbuj je umieścić, jeżeli dany statek nie może być umieszczony na planszy, wylosuj nowy i próbuj do skutku. 
@@ -80,7 +98,8 @@ namespace Battleships
        //{
        //     for (int i = 0; i < 3; i++)
        //     {
-       //         
+       //         Ship ship = new Ship();
+
        //     }
        //}
     }
