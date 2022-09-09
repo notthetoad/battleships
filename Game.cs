@@ -4,8 +4,24 @@ namespace Battleships
 {
     class Game
     {
-        //public int[,] Board {get; set;} = new int[10, 10];
-        public Field[,] Board {get; set;} = new Field[10, 10];
+        public int[,] Board {get; set;} = new int[10, 10];
+        //public Field[,] Board {get; set;} = new Field[10, 10];
+
+        public Field[,] MakeBoard()
+        {
+            Field[,] board = new Field[10,10];
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    board[i, j] = new Field();
+                    Console.Write("{0} ", board[i, j].IsEmpty);
+                }
+                Console.Write("\n");
+            }
+            return board;
+        }
 
         public void PrintBoard()
         {
@@ -13,12 +29,7 @@ namespace Battleships
             {
                 for (int j = 0; j < Board.GetLength(1); j++)
                 {
-                    Field.X = i;
-                    Field.Y = j;
-                    Field.Position[0] = i;
-                    Field.Position[1] = j;
-                    //Console.Write("{0} ", Board[i,j]);
-                    Console.Write("Position: X:{0}, Y:{1}\n", Field.Position[0], Field.Position[1]);
+                    Console.Write("{0} ", Board[i,j]);
                 }
                 Console.Write("\n");
             }

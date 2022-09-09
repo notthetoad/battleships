@@ -2,26 +2,12 @@ namespace Battleships
 {
     class Field
     {
-        private static int x;
-        private static int y;
-        private static int[] position = new int[2];
+        private bool isEmpty = true;
 
-        public static int X
+        public bool IsEmpty
         {
-            get => x;
-            set => x = value;
-        }
-
-        public static int Y
-        {
-            get => y;
-            set => y = value;
-        }
-
-        public static int[] Position
-        {
-            get => position;
-            set => position = value;
+            get => isEmpty;
+            set => isEmpty = !isEmpty;
         }
     }
 }

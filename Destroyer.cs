@@ -1,4 +1,4 @@
-namespace Battleships
+namespace Battleships0
 {
     class Destroyer
     {
