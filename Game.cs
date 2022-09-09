@@ -85,11 +85,10 @@ namespace Battleships
             for (int i = 0; i < ship.size; i++)
             {
                 Board[ship.x+i, ship.y] = 1;
-            } return true;
+            } 
+            return true;
         }
 
-        // Metoda, która wstawia wszystkie statki po kolei. Dopóki wszystkie statki nie zostaną umieszcone (pętla), twórz statki i próbuj je umieścić, jeżeli dany statek nie może być umieszczony na planszy, wylosuj nowy i próbuj do skutku. 
-       // Sometimes works 
        public void PlaceAllShips() 
        {
             for (int i = 0; i < 3; i++)
@@ -100,11 +99,3 @@ namespace Battleships
        }
     }
 }
-
-
-
-
-
-
-
-
