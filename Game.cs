@@ -30,5 +30,26 @@ class Game
 
     private void PlaceShips()
     {
+        Random rnd = new();
+        foreach(Ship ship in ships)
+        {
+            // Roll if ship is vertical or horizontal
+            if (rnd.Next(2) == 0)
+            {
+                // Ship is vertical 
+                int maxX = BoardSize - 1;
+                int maxY = BoardSize - ship.Length;
+                bool isPlacingShip = true;
+                while(isPlacingShip)
+                {
+                    int x = rnd.Next(maxX + 1);
+                    int y = rnd.Next(maxY + 1);
+                    if (board.TryToPlaceShip(x, y, ship))
+                        isPlacingShip = false;
+                }
+            }
+        }
     }
+
+
 }

@@ -1,10 +1,13 @@
-﻿namespace Foo;
+﻿namespace Battleships;
 
 class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Hello World");
+        // TODO pytaj czy chce powtorzyc gre
+        Game game = new();
+        game.Setup();
+        game.Start();
     }
 }
 
