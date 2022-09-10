@@ -1,6 +1,6 @@
 namespace Battleships;
 
-class Ship
+public class Ship
 {
     private int length;
     private int hitpoints;

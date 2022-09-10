@@ -15,7 +15,7 @@ public class Cell
         get => wasShot;
     }
 
-    public AssignShip(Ship ship)
+    public void AssignShip(Ship ship)
     {
         this.ship = ship; 
     }

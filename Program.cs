@@ -7,7 +7,7 @@ class Program
         // TODO pytaj czy chce powtorzyc gre
         Game game = new();
         game.Setup();
-        game.Start();
+        //game.Start();
     }
 }
 

@@ -2,7 +2,7 @@ namespace Battleships;
 
 class Board
 {
-    private boardSize;
+    private int boardSize;
     private Cell[,] cells;
 
     public Board(int boardSize)
@@ -13,40 +13,58 @@ class Board
 
     public bool IsCellEmpty(int x, int y)
     {
-        return cells[x, y].cells.IsEmpty;        
+        return cells[x, y].IsEmpty;
     }
 
-    public bool CanShipBePlaced(int x, int y, Ship ship)
+    public bool CanShipBePlaced(int x, int y, Ship ship, bool isVertical)
     {
 
         if (x < 0 || y < 0)
             return false;
 
-        if (x >= boardSize || y > boardSize - ship.Length)
+        int xUpperBound;
+        int yUpperBound;
+        if (isVertical) 
+        {
+            xUpperBound = boardSize - 1;
+            yUpperBound = boardSize - ship.Length;
+        }
+        else
+        {
+            xUpperBound = boardSize - ship.Length;
+            yUpperBound = boardSize - 1;
+        }
+
+        if (x > xUpperBound || y > yUpperBound)
             return false;
 
         for (int i = 0; i < ship.Length; i++)
         {
-            if(!IsCellEmpty(x, y+i))
+            int finalX = isVertical ? x : x+i;
+            int finalY = isVertical ? y+i : y;
+            if(!IsCellEmpty(finalX, finalY))
                 return false;
         }
         return true;
     }
 
-    private void PlaceShip(int x, int y, Ship ship)
+    private void PlaceShip(int x, int y, Ship ship, bool isVertical)
     {
         for (int i = 0; i < ship.Length; i++)
         {
-            cells[x,y+i].AssignShip(ship);
+            int finalX = isVertical ? x : x+i;
+            int finalY = isVertical ? y+i : y;
+
+            cells[finalX,finalY].AssignShip(ship);
         }
     }
 
-    public bool TryToPlaceShip(int x, int y, Ship ship)
+    public bool TryToPlaceShip(int x, int y, Ship ship, bool isVertical)
     {
-        if (!CanShipBePlaced(x, y, ship))
+        if (!CanShipBePlaced(x, y, ship, isVertical))
             return false;
 
-        PlaceShip(x, y, ship);
+        PlaceShip(x, y, ship, isVertical);
         return true;
     }
 }
