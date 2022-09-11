@@ -2,31 +2,28 @@ namespace Battleships;
 
 public class Ship
 {
-    private int length;
-    private int hitpoints;
+  private int length;
+  private int hitpoints;
 
-   public Ship(int length) 
-   {
-        this.length = length; 
-        this.hitpoints = length;
-   }
+  public Ship(int length)
+  {
+    this.length = length;
+    this.hitpoints = length;
+  }
 
-   public int Length
-   {
-        get => length;
-   }
+  public int Length
+  {
+    get => length;
+  }
 
-   public int Hitpoints
-   {
-        get => hitpoints;
-   }
+  public int Hitpoints
+  {
+    get => hitpoints;
+  }
 
-   public void Hit()
-   {
-        if (hitpoints > 0)
-            hitpoints -= 1;
-
-        if (hitpoints == 0)
-            System.Console.WriteLine("Ship was sunk");
-   }
+  public void Hit()
+  {
+    if (hitpoints > 0)
+      hitpoints -= 1;
+  }
 }

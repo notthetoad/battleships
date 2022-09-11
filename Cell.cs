@@ -2,31 +2,37 @@ namespace Battleships;
 
 public class Cell
 {
-    private Ship ship;
-    private bool wasShot;
+  private Ship ship;
+  private bool wasShot;
 
-    public bool IsEmpty
+  public bool IsEmpty
+  {
+    get => ship == null;
+  }
+
+  public bool WasShot
+  {
+    get => wasShot;
+  }
+
+  public void AssignShip(Ship ship)
+  {
+    this.ship = ship;
+  }
+
+  public void FireAt()
+  {
+    this.wasShot = true;
+
+    if (IsEmpty)
+      System.Console.WriteLine("Miss!");
+    else
     {
-        get => ship == null;
+      this.ship.Hit();
+      if (this.ship.Hitpoints == 0)
+        System.Console.WriteLine("Ship was sunk!");
+      else
+        System.Console.WriteLine("Hit!");
     }
-
-    public bool WasShot
-    {
-        get => wasShot;
-    }
-
-    public void AssignShip(Ship ship)
-    {
-        this.ship = ship; 
-    }
-
-    public void FireAt()
-    {
-        if (wasShot)
-            return;
-        this.wasShot = true; 
-
-        if (!IsEmpty)
-            this.ship.Hit();
-    }
+  }
 }
