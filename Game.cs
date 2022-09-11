@@ -93,8 +93,7 @@ class Game
         }
         catch (System.FormatException e)
         {
-          // TODO poprawic komunikat
-          System.Console.WriteLine("error");
+          System.Console.WriteLine("Invalid format! Please use correct format e.g. 'a5'");
           continue;
         }
 
@@ -104,7 +103,6 @@ class Game
           System.Console.WriteLine("No such field on the board!");
           continue;
         }
-        // TODO Check if cell was already shot at
         if (board.WasCellShot(x, y))
         {
           System.Console.WriteLine("Field was already bombarded!");
