@@ -105,6 +105,11 @@ class Game
           continue;
         }
         // TODO Check if cell was already shot at
+        if (board.WasCellShot(x, y))
+        {
+          System.Console.WriteLine("Field was already bombarded!");
+          continue;
+        }
 
         isInputValid = true;
 

@@ -80,6 +80,11 @@ class Board
     cells[x, y].FireAt();
   }
 
+  public bool WasCellShot(int x, int y)
+  {
+    return cells[x, y].WasShot;
+  }
+
   public void Print(bool cheatMode = false)
   {
     for (int row = 0; row < boardSize; row++)
@@ -92,6 +97,7 @@ class Board
         {
           c = cell.IsEmpty ? '_' : '*';
         }
+
         if (cell.WasShot)
         {
           c = cell.IsEmpty ? 'o' : 'x';
