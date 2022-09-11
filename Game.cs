@@ -87,6 +87,7 @@ class Game
       bool isInputValid = false;
       do
       {
+        System.Console.Write("Awaiting orders! >> ");
         try
         {
           InputUtils.ReadUserInput(out rawX, out rawY);
@@ -97,6 +98,11 @@ class Game
           continue;
         }
 
+        if (!InputUtils.IsValidCharCoord(rawX))
+        {
+          System.Console.WriteLine("First coordinate should be a letter!");
+          continue;
+        }
         InputUtils.ParseRawCoord(rawX, rawY, out x, out y);
         if (x < 0 || y < 0 || x >= BoardSize || y >= BoardSize)
         {
