@@ -25,5 +25,8 @@ public class Ship
    {
         if (hitpoints > 0)
             hitpoints -= 1;
+
+        if (hitpoints == 0)
+            System.Console.WriteLine("Ship was sunk");
    }
 }

@@ -57,5 +57,58 @@ class Game
         }
     }
 
+    private bool IsGameOver()
+    {
+        foreach(Ship ship in ships)
+        {
+            if (ship.Hitpoints > 0)
+                return false;
+        }
+        return true;
+    }
 
+    public void Start()
+    {
+        Setup();
+        MainLoop();
+    }
+
+    public void MainLoop()
+    {
+        // petla wczytywania inputow
+        while(!IsGameOver())
+        {
+            char rawX;
+            int rawY; 
+            int x = -1;
+            int y = -1;
+            
+            bool isInputValid = false;
+            do
+            {
+                try
+                {
+                    InputUtils.ReadUserInput(out rawX, out rawY);
+                }
+                catch (System.FormatException e)
+                {
+                    // TODO poprawic komunikat
+                    System.Console.WriteLine("error");
+                    continue;
+                }
+
+                InputUtils.ParseRawCoord(rawX, rawY, out x, out y);
+                if (x < 0 || y < 0 || x >= BoardSize || y >= BoardSize)
+                {
+                    System.Console.WriteLine("No such field on the board!");
+                    continue;
+                }
+
+                isInputValid = true;
+
+            } while(!isInputValid);
+
+            board.FireAt(x, y);  
+        }
+    }
 }

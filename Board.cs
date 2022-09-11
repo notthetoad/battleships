@@ -9,6 +9,13 @@ class Board
     {
         this.boardSize = 10;
         this.cells = new Cell[boardSize, boardSize];
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                cells[i,j] = new Cell();
+            }
+        }
     }
 
     public bool IsCellEmpty(int x, int y)
@@ -66,5 +73,10 @@ class Board
 
         PlaceShip(x, y, ship, isVertical);
         return true;
+    }
+    
+    public void FireAt(int x, int y)
+    {
+        cells[x,y].FireAt(); 
     }
 }

@@ -1,4 +1,4 @@
-namespace Battleships{
+namespace Battleships;
 
 public class Cell
 {
@@ -19,5 +19,14 @@ public class Cell
     {
         this.ship = ship; 
     }
-}
+
+    public void FireAt()
+    {
+        if (wasShot)
+            return;
+        this.wasShot = true; 
+
+        if (!IsEmpty)
+            this.ship.Hit();
+    }
 }
