@@ -87,8 +87,15 @@ class Board
 
   public void Print(bool cheatMode = false)
   {
+    System.Console.Write(" ");
+    for (int i = 0; i < boardSize; i++)
+    {
+      System.Console.Write(" {0}", i + 1);
+    }
+    System.Console.WriteLine();
     for (int row = 0; row < boardSize; row++)
     {
+      System.Console.Write("{0}", (char)('A' + row));
       for (int col = 0; col < boardSize; col++)
       {
         Cell cell = cells[row, col];
@@ -102,7 +109,7 @@ class Board
         {
           c = cell.IsEmpty ? 'o' : 'x';
         }
-        System.Console.Write("{0} ", c);
+        System.Console.Write(" {0}", c);
       }
       System.Console.WriteLine();
     }
