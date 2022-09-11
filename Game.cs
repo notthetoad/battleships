@@ -2,113 +2,115 @@ namespace Battleships;
 
 class Game
 {
-    public const int BoardSize = 10;
-    public const int ShipCount = 3;
-    public int[] ShipLengths = new int[] {5, 4, 4};
-    private Board board;
-    private Ship[] ships;
+  public const int BoardSize = 10;
+  public const int ShipCount = 3;
+  public int[] ShipLengths = new int[] { 5, 4, 4 };
+  private Board board;
+  private Ship[] ships;
 
-    public Game()
+  public Game()
+  {
+    this.board = new Board(BoardSize);
+    this.ships = new Ship[ShipCount];
+  }
+
+  public void Setup()
+  {
+    CreateShips();
+    PlaceShips();
+  }
+
+  private void CreateShips()
+  {
+    for (int i = 0; i < this.ships.Length; i++)
     {
-        this.board = new Board(BoardSize);
-        this.ships = new Ship[ShipCount];
+      ships[i] = new Ship(ShipLengths[i]);
     }
+  }
 
-    public void Setup()
+  private void PlaceShips()
+  {
+    Random rnd = new();
+    foreach (Ship ship in ships)
     {
-        CreateShips();
-        PlaceShips();
-    }
-
-    private void CreateShips()
-    {
-        for (int i = 0; i < this.ships.Length; i++)
+      bool isPlacingShip = true;
+      while (isPlacingShip)
+      {
+        bool isVertical = rnd.Next(2) == 0;
+        int maxX;
+        int maxY;
+        if (isVertical)
         {
-            ships[i] = new Ship(ShipLengths[i]); 
+          maxX = BoardSize - 1;
+          maxY = BoardSize - ship.Length;
         }
-    }
-
-    private void PlaceShips()
-    {
-        Random rnd = new();
-        foreach(Ship ship in ships)
+        else
         {
-            bool isPlacingShip = true;
-            while(isPlacingShip)
-            {
-                bool isVertical = rnd.Next(2) == 0;
-                int maxX;
-                int maxY;
-                if (isVertical)
-                {
-                    maxX = BoardSize - 1;
-                    maxY = BoardSize - ship.Length;
-                }
-                else
-                {
-                    maxX = BoardSize - ship.Length;
-                    maxY = BoardSize - 1;
-                }
-                int x = rnd.Next(maxX + 1);
-                int y = rnd.Next(maxY + 1);
-                if (board.TryToPlaceShip(x, y, ship, isVertical))
-                    isPlacingShip = false;
-            }
+          maxX = BoardSize - ship.Length;
+          maxY = BoardSize - 1;
         }
+        int x = rnd.Next(maxX + 1);
+        int y = rnd.Next(maxY + 1);
+        if (board.TryToPlaceShip(x, y, ship, isVertical))
+          isPlacingShip = false;
+      }
     }
+  }
 
-    private bool IsGameOver()
+  private bool IsGameOver()
+  {
+    foreach (Ship ship in ships)
     {
-        foreach(Ship ship in ships)
+      if (ship.Hitpoints > 0)
+        return false;
+    }
+    return true;
+  }
+
+  public void Start()
+  {
+    Setup();
+    MainLoop();
+  }
+
+  public void MainLoop()
+  {
+    // petla wczytywania inputow
+    while (!IsGameOver())
+    {
+      board.Print(true);
+      char rawX;
+      int rawY;
+      int x = -1;
+      int y = -1;
+
+      bool isInputValid = false;
+      do
+      {
+        try
         {
-            if (ship.Hitpoints > 0)
-                return false;
+          InputUtils.ReadUserInput(out rawX, out rawY);
         }
-        return true;
-    }
-
-    public void Start()
-    {
-        Setup();
-        MainLoop();
-    }
-
-    public void MainLoop()
-    {
-        // petla wczytywania inputow
-        while(!IsGameOver())
+        catch (System.FormatException e)
         {
-            char rawX;
-            int rawY; 
-            int x = -1;
-            int y = -1;
-            
-            bool isInputValid = false;
-            do
-            {
-                try
-                {
-                    InputUtils.ReadUserInput(out rawX, out rawY);
-                }
-                catch (System.FormatException e)
-                {
-                    // TODO poprawic komunikat
-                    System.Console.WriteLine("error");
-                    continue;
-                }
-
-                InputUtils.ParseRawCoord(rawX, rawY, out x, out y);
-                if (x < 0 || y < 0 || x >= BoardSize || y >= BoardSize)
-                {
-                    System.Console.WriteLine("No such field on the board!");
-                    continue;
-                }
-
-                isInputValid = true;
-
-            } while(!isInputValid);
-
-            board.FireAt(x, y);  
+          // TODO poprawic komunikat
+          System.Console.WriteLine("error");
+          continue;
         }
+
+        InputUtils.ParseRawCoord(rawX, rawY, out x, out y);
+        if (x < 0 || y < 0 || x >= BoardSize || y >= BoardSize)
+        {
+          System.Console.WriteLine("No such field on the board!");
+          continue;
+        }
+        // TODO Check if cell was already shot at
+
+        isInputValid = true;
+
+      } while (!isInputValid);
+
+      board.FireAt(x, y);
     }
+  }
 }
