@@ -92,6 +92,11 @@ class Game
           System.Console.WriteLine("Invalid format! Please use correct format e.g. 'a5'");
           continue;
         }
+        catch (System.IndexOutOfRangeException)
+        {
+          System.Console.WriteLine("Coordinates cannot be empty. Please enter correct coordinates e.g. 'a5'");
+          continue;
+        }
 
         if (!InputUtils.IsValidCharCoord(rawCol))
         {

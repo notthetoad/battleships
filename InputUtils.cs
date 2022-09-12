@@ -10,8 +10,8 @@ class InputUtils
   public static void ReadUserInput(out char charCoord, out int intCoord)
   {
 
-    string input = System.Console.ReadLine();
-    charCoord = Char.ToLower(input[0]);
+    string? input = System.Console.ReadLine();
+    charCoord = Char.ToLower(input![0]);
     intCoord = Int32.Parse(input.Substring(1));
     System.Console.WriteLine("{0}, {1}", charCoord, intCoord);
   }
