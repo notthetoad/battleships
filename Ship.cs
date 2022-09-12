@@ -1,6 +1,6 @@
 namespace Battleships;
 
-public class Ship
+public abstract class Ship
 {
   private int length;
   private int hitpoints;
@@ -26,4 +26,6 @@ public class Ship
     if (hitpoints > 0)
       hitpoints -= 1;
   }
+
+  //public abstract string GetHitMessage();
 }
