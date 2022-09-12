@@ -85,7 +85,7 @@ class Board
     return cells[x, y].WasShot;
   }
 
-  public void Print()
+  public void Print(bool cheatMode = true)
   {
     System.Console.Write(" ");
     for (int i = 0; i < boardSize; i++)
@@ -100,7 +100,10 @@ class Board
       {
         Cell cell = cells[row, col];
         char c = '_';
-
+        if (cheatMode)
+        {
+          c = cell.IsEmpty ? '_' : '*';
+        }
         if (cell.WasShot)
         {
           c = cell.IsEmpty ? 'o' : 'x';
