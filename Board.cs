@@ -85,25 +85,21 @@ class Board
     return cells[x, y].WasShot;
   }
 
-  public void Print(bool cheatMode = false)
+  public void Print()
   {
     System.Console.Write(" ");
     for (int i = 0; i < boardSize; i++)
     {
-      System.Console.Write(" {0}", i + 1);
+      System.Console.Write(" {0}", (char)('A' + i));
     }
     System.Console.WriteLine();
     for (int row = 0; row < boardSize; row++)
     {
-      System.Console.Write("{0}", (char)('A' + row));
+      System.Console.Write("{0}", row + 1);
       for (int col = 0; col < boardSize; col++)
       {
         Cell cell = cells[row, col];
         char c = '_';
-        if (cheatMode)
-        {
-          c = cell.IsEmpty ? '_' : '*';
-        }
 
         if (cell.WasShot)
         {

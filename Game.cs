@@ -73,11 +73,11 @@ class Game
   {
     while (!IsGameOver())
     {
-      board.Print(true);
-      char rawX;
-      int rawY;
-      int x = -1;
-      int y = -1;
+      board.Print();
+      char rawCol;
+      int rawRow;
+      int col = -1;
+      int row = -1;
 
       bool isInputValid = false;
       do
@@ -85,26 +85,26 @@ class Game
         System.Console.Write("Awaiting orders! >> ");
         try
         {
-          InputUtils.ReadUserInput(out rawX, out rawY);
+          InputUtils.ReadUserInput(out rawCol, out rawRow);
         }
-        catch (System.FormatException e)
+        catch (System.FormatException)
         {
           System.Console.WriteLine("Invalid format! Please use correct format e.g. 'a5'");
           continue;
         }
 
-        if (!InputUtils.IsValidCharCoord(rawX))
+        if (!InputUtils.IsValidCharCoord(rawCol))
         {
           System.Console.WriteLine("First coordinate should be a letter!");
           continue;
         }
-        InputUtils.ParseRawCoord(rawX, rawY, out x, out y);
-        if (x < 0 || y < 0 || x >= BoardSize || y >= BoardSize)
+        InputUtils.ParseRawCoord(rawCol, rawRow, out col, out row);
+        if (col < 0 || row < 0 || col >= BoardSize || row >= BoardSize)
         {
           System.Console.WriteLine("No such field on the board!");
           continue;
         }
-        if (board.WasCellShot(x, y))
+        if (board.WasCellShot(row, col))
         {
           System.Console.WriteLine("Field was already bombarded!");
           continue;
@@ -114,7 +114,9 @@ class Game
 
       } while (!isInputValid);
 
-      board.FireAt(x, y);
+      board.FireAt(row, col);
+
     }
+    System.Console.WriteLine("All of enemy ships were sunk. Game over.");
   }
 }
