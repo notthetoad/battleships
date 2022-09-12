@@ -2,8 +2,8 @@ namespace Battleships;
 
 class Destroyer : Ship
 {
-  public Destroyer() : this(4)
-  {
+  private static string ShipClassName = "Destroyer";
+  private static int ShipSize = 4;
 
-  }
+  public Destroyer() : base(ShipSize, ShipClassName) { }
 }

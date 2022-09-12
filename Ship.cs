@@ -4,11 +4,13 @@ public abstract class Ship
 {
   private int length;
   private int hitpoints;
+  private string shipClassName;
 
-  public Ship(int length)
+  public Ship(int length, string shipClassName)
   {
     this.length = length;
     this.hitpoints = length;
+    this.shipClassName = shipClassName;
   }
 
   public int Length
@@ -27,5 +29,8 @@ public abstract class Ship
       hitpoints -= 1;
   }
 
-  public abstract string GetHitMessage();
+  public string ShipClassName
+  {
+    get => shipClassName;
+  }
 }

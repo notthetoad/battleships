@@ -25,14 +25,15 @@ public class Cell
     this.wasShot = true;
 
     if (IsEmpty)
-      System.Console.WriteLine("Miss!");
+      System.Console.WriteLine("Miss.");
     else
     {
       this.ship.Hit();
+      string shipClass = this.ship.ShipClassName;
       if (this.ship.Hitpoints == 0)
-        System.Console.WriteLine("Ship was sunk!");
+        System.Console.WriteLine($"{shipClass} was sunk.");
       else
-        System.Console.WriteLine("Hit!");
+        System.Console.WriteLine($"Hit. {shipClass}.");
     }
   }
 }

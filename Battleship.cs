@@ -2,11 +2,8 @@ namespace Battleships;
 
 class Battleship : Ship
 {
-    private string name = "Battleship";
-    public Battleship(int length) : base(length){}
+  private static string ShipClassName = "Battleship";
+  private static int ShipSize = 5;
+  public Battleship() : base(ShipSize, ShipClassName) { }
 
-    public override string GetHitMessage()
-    {
-        return "Battleship hit";
-    }
 }
