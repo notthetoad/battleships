@@ -27,5 +27,5 @@ public abstract class Ship
       hitpoints -= 1;
   }
 
-  //public abstract string GetHitMessage();
+  public abstract string GetHitMessage();
 }

@@ -75,7 +75,6 @@ class Game
 
   public void MainLoop()
   {
-    // petla wczytywania inputow
     while (!IsGameOver())
     {
       board.Print(true);
