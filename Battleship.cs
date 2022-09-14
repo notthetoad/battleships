@@ -1,12 +1,9 @@
-namespace Battleships
-{
-    class Battleship
-    {
-        private int size = 5;
+namespace Battleships;
 
-        public int GetSize()
-        {
-            return size;
-        }
-    }
+class Battleship : Ship
+{
+  private static string ShipClass = "Battleship";
+  private static int ShipSize = 5;
+  public Battleship() : base(ShipSize, ShipClass) { }
+
 }

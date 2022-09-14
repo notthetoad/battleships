@@ -1,84 +1,127 @@
-using System;
+namespace Battleships;
 
-namespace Battleships
+class Game
 {
-    class Game
+  public const int BoardSize = 10;
+  public const int ShipCount = 3;
+  private Board board;
+  private Ship[] ships;
+
+  public Game()
+  {
+    this.board = new Board(BoardSize);
+    this.ships = new Ship[ShipCount];
+  }
+
+  public void Setup()
+  {
+    CreateShips();
+    PlaceShips();
+  }
+
+  private void CreateShips()
+  {
+    ships = new Ship[] { new Battleship(), new Destroyer(), new Destroyer() };
+  }
+
+  private void PlaceShips()
+  {
+    Random rnd = new();
+    foreach (Ship ship in ships)
     {
-        public int[,] Board {get; set;} = new int[10, 10];
-
-        // First make a function that will random a number between 0-10
-        // Second get random number to place value in first dimension array and then in second dimension array
-        // Third make it 5 squares to put it in array, need to check if it will fit given the random number (place in array)
-        // Fourth make it vertical instead of horizontal, need to check both dimensions if it will fit
-
-        public void printBoard()
+      bool isPlacingShip = true;
+      while (isPlacingShip)
+      {
+        bool isVertical = rnd.Next(2) == 0;
+        int maxX;
+        int maxY;
+        if (isVertical)
         {
-            for (int i = 0; i < Board.GetLength(0); i++)
-            {
-                for (int j = 0; j < Board.GetLength(1); j++)
-                {
-                    Console.Write("{0} ", Board[i,j]);
-                }
-                Console.Write("\n");
-            }
+          maxX = BoardSize - 1;
+          maxY = BoardSize - ship.Length;
         }
-
-        public int[] GetRandomCoordinates()
+        else
         {
-            Random rnd = new Random();
-            int[] coords = new int[2];
-            coords[0] = rnd.Next(10);
-            coords[1] = rnd.Next(10);
-            return coords;
+          maxX = BoardSize - ship.Length;
+          maxY = BoardSize - 1;
         }
-
-        public void InsertRandomSquare()
-        {
-            int[] pos = GetRandomCoordinates();
-            Board[pos[0], pos[1]] = 1;
-        }
-
-        // 1. Get random position
-        // 2. Check to see if ship of size 5 fits
-        // 3. if position - size of ship is greater or equal to 0 ship can be inserted
-        // if it is not greater or equal to 0 we can:
-        //  - search for new random number that checks these conditions
-        //  - start inserting squares at the back of the ship
-        //  I think this logic is going in the right direction, just need to work out how to make logical statement that will meet conditions I have
-        //  This works, but is weird exception if 1st dimension idx is 10 and 2nd dimension idx is 0: IndexOutOfRangeException
-        //  If Board[10, 10] gets randomed for position Exception IndexOutOfRangeException
-        public void InsertShipHorizontal()
-        {
-            Destroyer destroyer = new Destroyer();
-            int[] pos = GetRandomCoordinates();
-            for (int i = 0; i < destroyer.GetSize(); i++)
-            {
-                Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
-                if (pos[1]+destroyer.GetSize() <= Board.GetLength(1))
-                    Board[pos[0], pos[1]+i] = 1;
-                else
-                    Board[pos[0], pos[1]-i] = 1;
-            }
-        }
-
-        // Same exception as in InsertShipHorizontal(). Will need to add checking for other ship because they cannot cross. Need to add inserting at the back if there is not enough space.
-        public void InsertShipVertical()
-        {
-            Battleship battleship = new Battleship();
-            int[] pos = GetRandomCoordinates();
-            for (int i = 0; i < battleship.GetSize(); i++)
-            {
-                Console.WriteLine("rnd1: {0}\trnd2: {1}\ti: {2}", pos[0], pos[1], i);
-                if (pos[0]+battleship.GetSize() <= Board.GetLength(0))
-                    Board[pos[0]+i, pos[1]] = 1;
-                else
-                    Board[pos[0]-i, pos[1]] = 1;
-            }
-        }
-
-        public void PopulateBoard()
-        {
-            
-        }
+        int x = rnd.Next(maxX + 1);
+        int y = rnd.Next(maxY + 1);
+        if (board.TryToPlaceShip(x, y, ship, isVertical))
+          isPlacingShip = false;
+      }
     }
+  }
+
+  private bool IsGameOver()
+  {
+    foreach (Ship ship in ships)
+    {
+      if (ship.Hitpoints > 0)
+        return false;
+    }
+    return true;
+  }
+
+  public void Start()
+  {
+    Setup();
+    MainLoop();
+  }
+
+  public void MainLoop()
+  {
+    while (!IsGameOver())
+    {
+      board.Print();
+      char rawCol;
+      int rawRow;
+      int col = -1;
+      int row = -1;
+
+      bool isInputValid = false;
+      do
+      {
+        System.Console.Write("Awaiting orders! >> ");
+        try
+        {
+          InputUtils.ReadUserInput(out rawCol, out rawRow);
+        }
+        catch (System.FormatException)
+        {
+          System.Console.WriteLine("Invalid format! Please use correct format e.g. 'a5'");
+          continue;
+        }
+        catch (System.IndexOutOfRangeException)
+        {
+          System.Console.WriteLine("Coordinates cannot be empty. Please enter correct coordinates e.g. 'a5'");
+          continue;
+        }
+
+        if (!InputUtils.IsValidCharCoord(rawCol))
+        {
+          System.Console.WriteLine("First coordinate should be a letter!");
+          continue;
+        }
+        InputUtils.ParseRawCoord(rawCol, rawRow, out col, out row);
+        if (col < 0 || row < 0 || col >= BoardSize || row >= BoardSize)
+        {
+          System.Console.WriteLine("No such field on the board!");
+          continue;
+        }
+        if (board.WasCellShot(row, col))
+        {
+          System.Console.WriteLine("Field was already bombarded!");
+          continue;
+        }
+
+        isInputValid = true;
+
+      } while (!isInputValid);
+
+      board.FireAt(row, col);
+
+    }
+    System.Console.WriteLine("All of enemy ships were sunk. Game over.");
+  }
 }
